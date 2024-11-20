@@ -77,8 +77,6 @@ function App() {
               progressItems={progressItems}
               input={input}
               output={output}
-              sourceLanguage={sourceLanguage}
-              targetLanguage={targetLanguage}
               setInput={setInput}
               setSourceLanguage={setSourceLanguage}
               setTargetLanguage={setTargetLanguage}

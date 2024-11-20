@@ -5,59 +5,125 @@ import Logo from "../components/common/logo";
 import Footer from "../components/common/footer";
 import NavBar from "../components/common/navBar";
 
-import LanguageSelector from '../components/LanguageSelector';
-import Progress from '../components/Progress';
+import INFO from "../data/user";
 
-function Homepage({
-  ready,
-  disabled,
-  progressItems,
-  input,
-  output,
-  setInput,
-  setSourceLanguage,
-  setTargetLanguage,
-  translate,
-}) {
-  return (
-    <>
-      <h1>Transformers.js</h1>
-      <h2>ML-powered multilingual translation in React!</h2>
+import "./styles/homepage.css";
+import LoadModel from '../components/homepage/loadModel';
 
-      <div className="container">
-        <div className="language-container">
-          <LanguageSelector
-            type="Source"
-            defaultLanguage="eng_Latn"
-            onChange={(x) => setSourceLanguage(x.target.value)}
-          />
-          <LanguageSelector
-            type="Target"
-            defaultLanguage="fra_Latn"
-            onChange={(x) => setTargetLanguage(x.target.value)}
-          />
-        </div>
+const Homepage = ({
+    ready,
+    disabled,
+    progressItems,
+    input,
+    output,
+    setInput,
+    setSourceLanguage,
+    setTargetLanguage,
+    translate,
+  }) => {
+	const [stayLogo, setStayLogo] = useState(false);
+	const [logoSize, setLogoSize] = useState(80);
+	const [oldLogoSize, setOldLogoSize] = useState(80);
 
-        <div className="textbox-container">
-          <textarea value={input} rows={3} onChange={(e) => setInput(e.target.value)}></textarea>
-          <textarea value={output} rows={3} readOnly></textarea>
-        </div>
-      </div>
+	useEffect(() => {
+		window.scrollTo(0, 0);
+	}, []);
 
-      <button disabled={disabled} onClick={translate}>
-        Translate
-      </button>
+	useEffect(() => {
+		const handleScroll = () => {
+			let scroll = Math.round(window.pageYOffset, 2);
 
-      <div className="progress-bars-container">
-        {ready === false && <label>Loading models... (only run once)</label>}
-        {progressItems.map((data) => (
-          <div key={data.file}>
-            <Progress text={data.file} percentage={data.progress} />
-          </div>
-        ))}
-      </div>
-    </>
-  );
-}
+			let newLogoSize = 80 - (scroll * 4) / 10;
+
+			if (newLogoSize < oldLogoSize) {
+				if (newLogoSize > 40) {
+					setLogoSize(newLogoSize);
+					setOldLogoSize(newLogoSize);
+					setStayLogo(false);
+				} else {
+					setStayLogo(true);
+				}
+			} else {
+				setLogoSize(newLogoSize);
+				setStayLogo(false);
+			}
+		};
+
+		window.addEventListener("scroll", handleScroll);
+		return () => window.removeEventListener("scroll", handleScroll);
+	}, [logoSize, oldLogoSize]);
+
+
+	const logoStyle = {
+		display: "flex",
+		position: stayLogo ? "fixed" : "relative",
+		top: stayLogo ? "3vh" : "auto",
+		zIndex: 999,
+		border: stayLogo ? "1px solid white" : "none",
+		borderRadius: stayLogo ? "50%" : "none",
+		boxShadow: stayLogo ? "0px 4px 10px rgba(0, 0, 0, 0.25)" : "none",
+	};
+
+	return (
+		<React.Fragment>
+			<Helmet>
+				<title>{INFO.main.title}</title>
+			</Helmet>
+
+			<div className="page-content">
+				<NavBar active="home" />
+				<div className="content-wrapper">
+					<div className="homepage-logo-container">
+						<div style={logoStyle}>
+							<Logo width={logoSize} link={false} />
+						</div>
+					</div>
+
+					<div className="homepage-container">
+						<div className="homepage-first-area">
+							<div className="homepage-first-area-left-side">
+								<div className="title homepage-title">
+									{INFO.homepage.title}
+								</div>
+
+								<div className="subtitle homepage-subtitle">
+									{INFO.homepage.description}
+								</div>
+							</div>
+
+							<div className="homepage-first-area-right-side">
+								<div className="homepage-image-container">
+									<div className="homepage-image-wrapper">
+										<img
+											src="homepage.jpg"
+											alt="about"
+											className="homepage-image"
+										/>
+									</div>
+								</div>
+							</div>
+						</div>
+
+                        <LoadModel
+                            ready={ready}
+                            disabled={disabled}
+                            progressItems={progressItems}
+                            input={input}
+                            output={output}
+                            setInput={setInput}
+                            setSourceLanguage={setSourceLanguage}
+                            setTargetLanguage={setTargetLanguage}
+                            translate={translate}
+                            />
+
+						<div className="page-footer">
+							<Footer />
+						</div>
+					</div>
+				</div>
+			</div>
+		</React.Fragment>
+	);
+};
 
 export default Homepage;
