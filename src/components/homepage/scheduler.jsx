@@ -80,7 +80,7 @@ const CustomCheckbox = muiStyled(Checkbox)({
 	},
 });
 
-const Scheduler = ({ translate }) => {
+const Scheduler = ({ generate }) => {
 	const [selectedTags, setSelectedTags] = useState([]);
 
 	const handleTagChange = (event) => {
@@ -168,7 +168,7 @@ const Scheduler = ({ translate }) => {
 				<CustomButton
 					variant="contained"
 					type="submit"
-					onClick={translate}
+					onClick={generate}
 				>
 					Submit
 				</CustomButton>

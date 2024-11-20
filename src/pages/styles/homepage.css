@@ -150,3 +150,21 @@
 		margin-right: -25px;
 	}
 }
+
+.loading-bar {
+    width: 100%;
+    height: 4px;
+    background-color: #007bff;
+    animation: loading 2s infinite;
+}
+
+@keyframes loading {
+    0% { width: 0; }
+    100% { width: 100%; }
+}
+
+.output {
+    padding: 10px;
+    background-color: #f8f9fa;
+    text-align: center;
+}

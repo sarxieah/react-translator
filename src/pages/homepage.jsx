@@ -8,19 +8,12 @@ import NavBar from "../components/common/navBar";
 import INFO from "../data/user";
 
 import "./styles/homepage.css";
-import LoadModel from '../components/homepage/loadModel';
 import Scheduler from '../components/homepage/scheduler';
 
 const Homepage = ({
-    ready,
-    disabled,
-    progressItems,
-    input,
-    output,
-    setInput,
-    setSourceLanguage,
-    setTargetLanguage,
-    translate,
+    generate,
+    loading,
+    output
   }) => {
 	const [stayLogo, setStayLogo] = useState(false);
 	const [logoSize, setLogoSize] = useState(80);
@@ -104,22 +97,25 @@ const Homepage = ({
 								</div>
 							</div>
 						</div>
-
-                        <LoadModel
-                            ready={ready}
-                            disabled={disabled}
-                            progressItems={progressItems}
-                            input={input}
-                            output={output}
-                            setInput={setInput}
-                            setSourceLanguage={setSourceLanguage}
-                            setTargetLanguage={setTargetLanguage}
-                            translate={translate}
-                            />
                         
                         <div className="homepage-projects">
-							<Scheduler translate={translate} />
-						</div>
+                            <Scheduler generate={generate} />
+                            {loading ? (
+                                <div className="loading-bar">Loading...</div>
+                            ) : (
+                                output && (
+                                    <div className="output">
+                                        {output[0].generated_text
+                                            .replace(/'/g, '"') // Replace single quotes with double quotes
+                                            .match(/\[(.*?)\]/)?.[1] // Extract the content inside the square brackets
+                                            .split(", ") // Split into an array of items
+                                            .join(", ")
+                                            } 
+                                    </div>
+                                )
+                            )}
+                        </div>
+
 
 						<div className="page-footer">
 							<Footer />
