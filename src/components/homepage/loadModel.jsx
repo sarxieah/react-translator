@@ -11,17 +11,17 @@ function LoadModel({
     <>
       <div className="subtitle" style={{marginTop: "20vh", fontSize: "20px"}}>
         Load the model before you start
+        <CustomButton
+      disabled={disabled}
+        variant="contained"
+        type="submit"
+        onClick={translate}
+        style={{marginLeft: "20px"}}
+    >
+        Load
+    </CustomButton>
     </div>
-      <button disabled={disabled} onClick={translate}>
-        Load Model
-      </button>
-      <CustomButton
-					variant="contained"
-					type="submit"
-					onClick={translate}
-				>
-					Submit
-				</CustomButton>
+     
 
       <div className="progress-bars-container">
         {ready === false && <label>Loading models... (only run once)</label>}

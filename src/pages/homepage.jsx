@@ -9,6 +9,7 @@ import INFO from "../data/user";
 
 import "./styles/homepage.css";
 import LoadModel from '../components/homepage/loadModel';
+import Scheduler from '../components/homepage/scheduler';
 
 const Homepage = ({
     ready,
@@ -115,6 +116,10 @@ const Homepage = ({
                             setTargetLanguage={setTargetLanguage}
                             translate={translate}
                             />
+                        
+                        <div className="homepage-projects">
+							<Scheduler translate={translate} />
+						</div>
 
 						<div className="page-footer">
 							<Footer />

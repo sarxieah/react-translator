@@ -41,6 +41,7 @@ function App() {
           setReady(true);
           break;
         case 'update':
+            console.log(e.data.output);
           setOutput(e.data.output);
           break;
         case 'complete':
