@@ -4,11 +4,9 @@ import { Helmet } from "react-helmet";
 import NavBar from "../components/common/navBar";
 import Footer from "../components/common/footer";
 import Logo from "../components/common/logo";
-import Article from "../components/articles/article";
+import Article from "../components/timeline/article";
 
 import INFO from "../data/user";
-import SEO from "../data/seo";
-import myArticles from "../data/articles";
 
 import "./styles/articles.css";
 
@@ -17,17 +15,10 @@ const Timeline = () => {
 		window.scrollTo(0, 0);
 	}, []);
 
-	const currentSEO = SEO.find((item) => item.page === "timeline");
-
 	return (
 		<React.Fragment>
 			<Helmet>
 				<title>{`Articles | ${INFO.main.title}`}</title>
-				<meta name="description" content={currentSEO.description} />
-				<meta
-					name="keywords"
-					content={currentSEO.keywords.join(", ")}
-				/>
 			</Helmet>
 
 			<div className="page-content">
@@ -51,20 +42,25 @@ const Timeline = () => {
 
 						<div className="articles-container">
 							<div className="articles-wrapper">
-								{myArticles.map((article, index) => (
 									<div
 										className="articles-article"
-										key={(index + 1).toString()}
 									>
 										<Article
-											key={(index + 1).toString()}
-											date={article().date}
-											title={article().title}
-											description={article().description}
-											link={"/article/" + (index + 1)}
+											date="11/20/2024"
+											title="Worked on website"
+											description="Lorem ipsum whatever description of what we all did"
+										/>
+                                        <Article
+											date="11/20/2024"
+											title="Worked on AI"
+											description="Lorem ipsum whatever description of what we all did"
+										/>
+                                        <Article
+											date="11/20/2024"
+											title="Worked on prompting"
+											description="Lorem ipsum whatever description of what we all did"
 										/>
 									</div>
-								))}
 							</div>
 						</div>
 					</div>

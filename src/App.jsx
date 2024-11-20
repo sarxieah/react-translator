@@ -2,6 +2,8 @@ import { useRef, useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Homepage from './pages/homepage';
 import './App.css';
+import Articles from "./pages/timeline";
+import About from "./pages/about";
 
 function App() {
   // State and worker initialization
@@ -84,7 +86,11 @@ function App() {
               translate={translate}
             />
           }
+          
         />
+       <Route path="/timeline" element={<Articles />} />
+       <Route path="/about" element={<About />} />
+
         {/* Add other routes as needed */}
       </Routes>
     </Router>
